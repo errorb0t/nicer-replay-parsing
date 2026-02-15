@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nicer-replay-parsing"
+version = "0.8"
+dependencies = ["heroprotocol @ git+https://github.com/Blizzard/heroprotocol"]
+authors = [{ name = "errorb0t" }]
+description = "heroprotocol wrapper that extracts basic info from a replay"

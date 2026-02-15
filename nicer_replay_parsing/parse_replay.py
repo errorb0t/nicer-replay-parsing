@@ -1,8 +1,8 @@
 from heroprotocol.versions import protocol96370
 import mpyq
 
-from model import Battleground, Draft, Gamemode, Player, Replay, Team, Version
-from util import *
+from .model import Battleground, Draft, Gamemode, Player, Replay, Team, Version
+from .util import *
 
 
 def parse_replay(filename):

@@ -1,1 +1,0 @@
-heroprotocol @ git+https://github.com/Blizzard/heroprotocol

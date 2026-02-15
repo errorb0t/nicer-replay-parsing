@@ -1,8 +1,5 @@
 from datetime import datetime
 from enum import Enum, auto
-import pkgutil
-
-import heroprotocol.versions
 
 
 class Version:
@@ -266,6 +263,6 @@ class Replay:
         )
 
     def get_heroprotocol(self):
-        from util import import_heroprotocol
+        from .util import import_heroprotocol
 
         return import_heroprotocol(self.version.base_build)

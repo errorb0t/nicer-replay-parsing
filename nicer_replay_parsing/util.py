@@ -4,7 +4,7 @@ import re
 
 import heroprotocol.versions
 
-from model import Battleground, Gamemode, Hero
+from .model import Battleground, Gamemode, Hero
 
 
 _GAMEMODE_DICT = {
