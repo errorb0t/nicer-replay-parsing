@@ -91,6 +91,8 @@ def parse_replay(filename):
         if event["_event"] == "NNet.Replay.Tracker.SHeroPickedEvent":
             wss_id = event["m_controllingPlayer"]
             player_id = wss_to_player[wss_id]
+            if "hero" in players[player_id].keys():
+                continue
             team = players[player_id]["team"]
             internal_hero_name = event["m_hero"].decode()
             hero = get_hero_from_internal(internal_hero_name)
@@ -146,18 +148,21 @@ def parse_replay(filename):
         for tracker_id in tracker_ids_to_player.keys():
             short_name = attributes["scopes"][tracker_id][4002][0]["value"].decode()
             player_id = tracker_ids_to_player[tracker_id]
+            if "hero" in players[player_id].keys():
+                continue
             team = players[player_id]["team"]
             hero = get_hero_from_short(short_name)
             players[player_id]["hero"] = hero
 
     player_models = ([], [])
     hero_models = ([], [])
+    winner = None
     for player_id, player in players.items():
         i = 0 if player["team"] == Team.LEFT else 1
         player_model = Player(player_id, player["name"], player["battletag"])
         player_models[i].append(player_model)
         hero_models[i].append(player["hero"])
-        if player["win"]:
+        if "win" in player.keys() and player["win"]:
             winner = player["team"]
 
     draft = None
