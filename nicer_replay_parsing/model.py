@@ -75,6 +75,14 @@ class Draft:
             self.picks[sp][4],
         ]
 
+    def is_ok(self):
+        return (
+            len(self.bans[Team.LEFT]) == 3
+            and len(self.bans[Team.RIGHT]) == 3
+            and len(self.picks[Team.LEFT]) == 5
+            and len(self.picks[Team.RIGHT]) == 5
+        )
+
 
 class Role(Enum):
     TANK = "Tank"
