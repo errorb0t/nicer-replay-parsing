@@ -17,7 +17,8 @@ _GAMEMODE_DICT = {
     50071: Gamemode.TEAM_LEAGUE,
     50091: Gamemode.STORM_LEAGUE,
     50101: Gamemode.ARAM,
-    -1: "Custom",
+    -1: Gamemode.CUSTOM,
+    None: Gamemode.CUSTOM,
 }
 _SHORT_HERO_DICT = {
     "Abat": Hero.ABATHUR,
