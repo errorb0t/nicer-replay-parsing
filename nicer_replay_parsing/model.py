@@ -225,7 +225,7 @@ class Replay:
         self,
         version: Version,
         gamemode: Gamemode,
-        duration: int,
+        duration: int | None,
         date: datetime,
         players: tuple[tuple[Player, ...], tuple[Player, ...]],
         heroes: tuple[tuple[Hero, ...], tuple[Hero, ...]],
@@ -235,7 +235,7 @@ class Replay:
     ):
         self.version: Version = version
         self.gamemode: Gamemode = gamemode
-        self.duration: int = duration
+        self.duration: int | None = duration
         self.date = date
         self.players: tuple[tuple[Player, ...], tuple[Player, ...]] = players
         self.heroes: tuple[tuple[Hero, ...], tuple[Hero, ...]] = heroes

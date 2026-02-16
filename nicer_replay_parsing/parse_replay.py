@@ -58,6 +58,7 @@ def parse_replay(filename):
     )
 
     # Trackerevents
+    duration = None
     tracker_ids_to_player = {}
     core_ids = []
     ais = []
