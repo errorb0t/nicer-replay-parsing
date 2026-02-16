@@ -83,6 +83,9 @@ class Draft:
             and len(self.picks[Team.RIGHT]) == 5
         )
 
+    def state(self):
+        return "Available" if self.is_ok() else "Incomplete"
+
 
 class Role(Enum):
     TANK = "Tank"
@@ -266,7 +269,7 @@ class Replay:
                 ),
                 "Battleground": str(self.battleground),
                 "Winner": str(self.winner),
-                "Draft": "Available" if self.draft else "None",
+                "Draft": self.draft.state() if self.draft else "None",
             }
         )
 
