@@ -1,3 +1,4 @@
+import hashlib
 from heroprotocol.versions import protocol96370
 import mpyq
 
@@ -31,31 +32,31 @@ def parse_replay(filename):
     date = get_date(details["m_timeUTC"])
 
     players: dict[str, dict] = {}
+    wss_to_player = {}
 
-    player_ids = [
-        f"{player['m_toon']['m_region']}-{player['m_toon']['m_programId'].decode()}-{player['m_toon']["m_realm"]}-{player['m_toon']["m_id"]}"
-        for player in details["m_playerList"]
-    ]
-    for player_id, playerdetails in zip(player_ids, details["m_playerList"]):
-        players[player_id] = {}
-        players[player_id]["team"] = (
-            Team.RIGHT if playerdetails["m_teamId"] else Team.LEFT
-        )
-        players[player_id]["name"] = playerdetails["m_name"]
-        players[player_id]["battletag"] = get_battletag(
-            battlelobby, playerdetails["m_name"]
-        )
-
-    wss_to_player = {
-        player["m_workingSetSlotId"]: player_id
-        for player_id, player in zip(player_ids, details["m_playerList"])
-    }
+    ai_count = 0
+    for player in details["m_playerList"]:
+        toon_handle = f"{player['m_toon']['m_region']}-{player['m_toon']['m_programId'].decode()}-{player['m_toon']["m_realm"]}-{player['m_toon']["m_id"]}"
+        if toon_handle == "0-\x00\x00\x00\x00-0-0":
+            toon_handle = f"AI_{ai_count}"
+            ai_count += 1
+        players[toon_handle] = {}
+        players[toon_handle]["team"] = Team.RIGHT if player["m_teamId"] else Team.LEFT
+        players[toon_handle]["name"] = player["m_name"]
+        players[toon_handle]["battletag"] = get_battletag(battlelobby, player["m_name"])
+        wss_to_player[player["m_workingSetSlotId"]] = toon_handle
 
     # Initdata
     initdata = protocol.decode_replay_initdata(archive.read_file("replay.initData"))
     gamemode = get_gamemode(
         initdata["m_syncLobbyState"]["m_gameDescription"]["m_gameOptions"]["m_ammId"]
     )
+
+    random_value = initdata["m_syncLobbyState"]["m_gameDescription"]["m_randomValue"]
+    id_string = "".join(
+        sorted([str(player["m_toon"]["m_id"]) for player in details["m_playerList"]])
+    )
+    replay_id = hashlib.md5((id_string + str(random_value)).encode()).hexdigest()
 
     # Trackerevents
     duration = None
@@ -69,7 +70,6 @@ def parse_replay(filename):
     for event in protocol.decode_replay_tracker_events(
         archive.read_file("replay.tracker.events")
     ):
-
         # Tracker IDs
         if event["_eventid"] == 10 and event["m_eventName"].decode() == "PlayerInit":
             tracker_ids_to_player[event["m_intData"][0]["m_value"]] = event[
@@ -130,8 +130,6 @@ def parse_replay(filename):
             and event["m_unitTypeName"].decode() == "KingsCore"
         ):
             core_ids.append((event["m_unitTagIndex"], event["m_unitTagRecycle"]))
-
-        # Core (game time)
         if (
             event["_eventid"] == 2
             and event["_event"] == "NNet.Replay.Tracker.SUnitDiedEvent"
@@ -140,8 +138,8 @@ def parse_replay(filename):
             last_gameloop = event["_gameloop"]
             duration = get_seconds(last_gameloop)
 
+    # Attribute Events
     if not found_heroes and gamemode not in [Gamemode.ARAM, Gamemode.BRAWL]:
-        # Attribute Events
         attributes = protocol.decode_replay_attributes_events(
             archive.read_file("replay.attributes.events")
         )
@@ -154,6 +152,7 @@ def parse_replay(filename):
             hero = get_hero_from_short(short_name)
             players[player_id]["hero"] = hero
 
+    # Building models
     player_models = ([], [])
     hero_models = ([], [])
     winner = None
@@ -164,11 +163,12 @@ def parse_replay(filename):
         hero_models[i].append(player["hero"])
         if "win" in player.keys() and player["win"]:
             winner = player["team"]
-
     draft = None
     if len(picks[Team.LEFT]) > 0:
         draft = Draft(bans, picks, firstpick)
+
     return Replay(
+        replay_id,
         version,
         gamemode,
         duration,

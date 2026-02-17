@@ -234,6 +234,7 @@ class Battleground(Enum):
 class Replay:
     def __init__(
         self,
+        replay_id: str,
         version: Version,
         gamemode: Gamemode,
         duration: int | None,
@@ -244,6 +245,7 @@ class Replay:
         winner: Team | None = None,
         draft: Draft | None = None,
     ):
+        self.id: str = replay_id
         self.version: Version = version
         self.gamemode: Gamemode = gamemode
         self.duration: int | None = duration
