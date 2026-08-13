@@ -100,7 +100,7 @@ def parse_replay(filename):
             players[player_id]["hero"] = hero
             found_heroes = True
 
-        # Heroes, level
+        # Heroes, level, battleground
         if (
             event["_eventid"] == 10
             and event["m_eventName"].decode() == "EndOfGameTalentChoices"
