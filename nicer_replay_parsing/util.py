@@ -132,6 +132,7 @@ _INTERNAL_HERO_DICT = {
     "Cho": Hero.CHO,
     "Chromie": Hero.CHROMIE,
     "Deathwing": Hero.DEATHWING,
+    "DeathwingDragonflightUnit": Hero.DEATHWING,
     "Dehaka": Hero.DEHAKA,
     "Deckard": Hero.DECKARD_CAIN,
     "Diablo": Hero.DIABLO,
