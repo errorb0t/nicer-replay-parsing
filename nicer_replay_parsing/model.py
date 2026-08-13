@@ -244,6 +244,7 @@ class Replay:
         players: tuple[tuple[Player, ...], tuple[Player, ...]],
         heroes: tuple[tuple[Hero, ...], tuple[Hero, ...]],
         battleground: Battleground,
+        incomplete: bool,
         winner: Team | None = None,
         draft: Draft | None = None,
     ):
@@ -255,6 +256,7 @@ class Replay:
         self.players: tuple[tuple[Player, ...], tuple[Player, ...]] = players
         self.heroes: tuple[tuple[Hero, ...], tuple[Hero, ...]] = heroes
         self.battleground: Battleground = battleground
+        self.incomplete = incomplete
         self.winner: Team | None = winner
         self.draft: Draft | None = draft
 
