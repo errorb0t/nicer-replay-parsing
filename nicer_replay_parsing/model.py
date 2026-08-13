@@ -94,6 +94,7 @@ class Role(Enum):
     MELEE_ASSASSIN = "Melee Assassin"
     HEALER = "Healer"
     SUPPORT = "Support"
+    UNKNOWN = ""
 
 
 class Hero(Enum):
@@ -187,6 +188,7 @@ class Hero(Enum):
     ZARYA = (88, "Zarya", Role.SUPPORT)
     ZERATUL = (89, "Zeratul", Role.MELEE_ASSASSIN)
     ZULJIN = (90, "Zul'jin", Role.RANGED_ASSASSIN)
+    UNKNOWN = (-1, "Unknown", Role.UNKNOWN)
 
     def __init__(self, id, display_name, role):
         self.id: int = id

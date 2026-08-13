@@ -111,6 +111,7 @@ _SHORT_HERO_DICT = {
     "Zary": Hero.ZARYA,
     "Zera": Hero.ZERATUL,
     "ZULJ": Hero.ZULJIN,
+    "Rand": Hero.UNKNOWN
 }
 _INTERNAL_HERO_DICT = {
     "Abathur": Hero.ABATHUR,
