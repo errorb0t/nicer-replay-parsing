@@ -6,7 +6,6 @@ import heroprotocol.versions
 
 from .model import Battleground, Gamemode, Hero
 
-
 _GAMEMODE_DICT = {
     50001: Gamemode.QUICK_MATCH,
     50021: Gamemode.VERSUS_AI,
@@ -111,7 +110,7 @@ _SHORT_HERO_DICT = {
     "Zary": Hero.ZARYA,
     "Zera": Hero.ZERATUL,
     "ZULJ": Hero.ZULJIN,
-    "Rand": Hero.UNKNOWN
+    "Rand": Hero.UNKNOWN,
 }
 _INTERNAL_HERO_DICT = {
     "Abathur": Hero.ABATHUR,
@@ -212,7 +211,7 @@ _INTERNAL_HERO_DICT = {
     "NONE": None,
 }
 
-LOCALIZED_HERO_DICT: dict[str, Hero] = {
+_LOCALIZED_HERO_DICT: dict[str, Hero] = {
     "Abathur": Hero.ABATHUR,
     "abathur": Hero.ABATHUR,
     "abatur": Hero.ABATHUR,
@@ -938,6 +937,195 @@ _BATTLEGROUND_DICT = {
     "EscapeFromBraxis(Heroic)": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
 }
 
+_LOCALIZED_BATTLEGROUND_DICT = {
+    "Alteracpass": Battleground.ALTERAC_PASS,
+    "Alterac Pass": Battleground.ALTERAC_PASS,
+    "Cañón de Alterac": Battleground.ALTERAC_PASS,
+    "Paso de Alterac": Battleground.ALTERAC_PASS,
+    "La passe d’Alterac": Battleground.ALTERAC_PASS,
+    "Passo d'Alterac": Battleground.ALTERAC_PASS,
+    "알터랙 고개": Battleground.ALTERAC_PASS,
+    "Przełęcz Alterak": Battleground.ALTERAC_PASS,
+    "Garganta de Alterac": Battleground.ALTERAC_PASS,
+    "Альтеракский перевал": Battleground.ALTERAC_PASS,
+    "奥特兰克战道": Battleground.ALTERAC_PASS,
+    "奧特蘭克隘口": Battleground.ALTERAC_PASS,
+    "Schlachtfeld der Ewigkeit": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "Battlefield of Eternity": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "Campos de Batalla de la Eternidad": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "Campo de batalla de la Eternidad": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "Les champs de l’éternité": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "Campi di Battaglia Eterni": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "영원의 전쟁터": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "Pole Bitewne Wieczności": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "Campo de Batalha da Eternidade": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "Вечная битва": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "永恒战场": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "永恆戰場": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "Schwarzherzbucht": Battleground.BLACKHEARTS_BAY,
+    "Blackheart's Bay": Battleground.BLACKHEARTS_BAY,
+    "Bahía de Almanegra": Battleground.BLACKHEARTS_BAY,
+    "La baie de Cœur-Noir": Battleground.BLACKHEARTS_BAY,
+    "Baia di Cuornero": Battleground.BLACKHEARTS_BAY,
+    "블랙하트 항만": Battleground.BLACKHEARTS_BAY,
+    "Zatoka Czarnosercego": Battleground.BLACKHEARTS_BAY,
+    "Baía do Coração Negro": Battleground.BLACKHEARTS_BAY,
+    "Бухта Черносерда": Battleground.BLACKHEARTS_BAY,
+    "黑心湾": Battleground.BLACKHEARTS_BAY,
+    "黑心灣": Battleground.BLACKHEARTS_BAY,
+    "Endstation Braxis": Battleground.BRAXIS_HOLDOUT,
+    "Braxis Holdout": Battleground.BRAXIS_HOLDOUT,
+    "Resistencia en Braxis": Battleground.BRAXIS_HOLDOUT,
+    "Le laboratoire de Braxis": Battleground.BRAXIS_HOLDOUT,
+    "Distaccamento di Braxis": Battleground.BRAXIS_HOLDOUT,
+    "브락시스 항전": Battleground.BRAXIS_HOLDOUT,
+    "Placówka na Braxis": Battleground.BRAXIS_HOLDOUT,
+    "Resistência de Braxis": Battleground.BRAXIS_HOLDOUT,
+    "Бойня на Браксисе": Battleground.BRAXIS_HOLDOUT,
+    "布莱克西斯禁区": Battleground.BRAXIS_HOLDOUT,
+    "布萊西斯實驗所": Battleground.BRAXIS_HOLDOUT,
+    # TODO: Add translations
+    "Braxis Outpost": Battleground.BRAXIS_OUTPOST,
+    # TODO: Add translations
+    "Checkpoint: Hanamura": Battleground.CHECKPOINT_HANAMURA,
+    "Verfluchtes Tal": Battleground.CURSED_HOLLOW,
+    "Cursed Hollow": Battleground.CURSED_HOLLOW,
+    "Cuenca Maldita": Battleground.CURSED_HOLLOW,
+    "Hondonada maldita": Battleground.CURSED_HOLLOW,
+    "Le val maudit": Battleground.CURSED_HOLLOW,
+    "Valle Maledetta": Battleground.CURSED_HOLLOW,
+    "저주받은 골짜기": Battleground.CURSED_HOLLOW,
+    "Przeklęta Kotlina": Battleground.CURSED_HOLLOW,
+    "Clareira Maldita": Battleground.CURSED_HOLLOW,
+    "Проклятая лощина": Battleground.CURSED_HOLLOW,
+    "诅咒谷": Battleground.CURSED_HOLLOW,
+    "詛咒谷地": Battleground.CURSED_HOLLOW,
+    "Drachengärten": Battleground.DRAGON_SHIRE,
+    "Dragon Shire": Battleground.DRAGON_SHIRE,
+    "Condado del Dragón": Battleground.DRAGON_SHIRE,
+    "Comarca del dragón": Battleground.DRAGON_SHIRE,
+    "Le comté du dragon": Battleground.DRAGON_SHIRE,
+    "Contea del Drago": Battleground.DRAGON_SHIRE,
+    "용의 둥지": Battleground.DRAGON_SHIRE,
+    "Smocze Włości": Battleground.DRAGON_SHIRE,
+    "Condado do Dragão": Battleground.DRAGON_SHIRE,
+    "Драконий край": Battleground.DRAGON_SHIRE,
+    "巨龙镇": Battleground.DRAGON_SHIRE,
+    "巨龍郡": Battleground.DRAGON_SHIRE,
+    # TODO: Add translations
+    "Escape From Braxis": Battleground.ESCAPE_FROM_BRAXIS,
+    # TODO: Add translations
+    "Escape From Braxis (Heroic)": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
+    "Garten der Ängste": Battleground.GARDEN_OF_TERROR,
+    "Garden of Terror": Battleground.GARDEN_OF_TERROR,
+    "Jardín del Terror": Battleground.GARDEN_OF_TERROR,
+    "Jardín del terror": Battleground.GARDEN_OF_TERROR,
+    "Les jardins de terreur": Battleground.GARDEN_OF_TERROR,
+    "Giardino del Terrore": Battleground.GARDEN_OF_TERROR,
+    "공포의 정원": Battleground.GARDEN_OF_TERROR,
+    "Ogród Grozy": Battleground.GARDEN_OF_TERROR,
+    "Jardim do Terror": Battleground.GARDEN_OF_TERROR,
+    "Сад ужасов": Battleground.GARDEN_OF_TERROR,
+    "恐魔园": Battleground.GARDEN_OF_TERROR,
+    "恐怖花園": Battleground.GARDEN_OF_TERROR,
+    "Tempel von Hanamura": Battleground.HANAMURA_TEMPLE,
+    "Hanamura Temple": Battleground.HANAMURA_TEMPLE,
+    "Templo de Hanamura": Battleground.HANAMURA_TEMPLE,
+    "Le temple d’Hanamura": Battleground.HANAMURA_TEMPLE,
+    "Tempio di Hanamura": Battleground.HANAMURA_TEMPLE,
+    "하나무라 사원": Battleground.HANAMURA_TEMPLE,
+    "Świątynia w Hanamurze": Battleground.HANAMURA_TEMPLE,
+    "Храм Ханамуры": Battleground.HANAMURA_TEMPLE,
+    "花村寺": Battleground.HANAMURA_TEMPLE,
+    "花村神殿": Battleground.HANAMURA_TEMPLE,
+    "Geisterminen": Battleground.HAUNTED_MINES,
+    "Haunted Mines": Battleground.HAUNTED_MINES,
+    "Minas Encantadas": Battleground.HAUNTED_MINES,
+    "Minas embrujadas": Battleground.HAUNTED_MINES,
+    "La mine hantée": Battleground.HAUNTED_MINES,
+    "Miniere Infestate": Battleground.HAUNTED_MINES,
+    "죽음의 광산": Battleground.HAUNTED_MINES,
+    "Nawiedzone Kopalnie": Battleground.HAUNTED_MINES,
+    "Mina Assombrada": Battleground.HAUNTED_MINES,
+    "Призрачные копи": Battleground.HAUNTED_MINES,
+    "鬼灵矿": Battleground.HAUNTED_MINES,
+    "亡骸礦坑": Battleground.HAUNTED_MINES,
+    # TODO: Add translations
+    "Industrial District": Battleground.INDUSTRIAL_DISTRICT,
+    "Höllenschreine": Battleground.INFERNAL_SHRINES,
+    "Infernal Shrines": Battleground.INFERNAL_SHRINES,
+    "Santuarios Infernales": Battleground.INFERNAL_SHRINES,
+    "Sagrarios Infernales": Battleground.INFERNAL_SHRINES,
+    "Les sanctuaires infernaux": Battleground.INFERNAL_SHRINES,
+    "Altari Infernali": Battleground.INFERNAL_SHRINES,
+    "불지옥 신단": Battleground.INFERNAL_SHRINES,
+    "Piekielne Kapliczki": Battleground.INFERNAL_SHRINES,
+    "Santuários Infernais": Battleground.INFERNAL_SHRINES,
+    "Оскверненные святилища": Battleground.INFERNAL_SHRINES,
+    "炼狱圣坛": Battleground.INFERNAL_SHRINES,
+    "煉獄聖壇": Battleground.INFERNAL_SHRINES,
+    "Vergessene Höhle": Battleground.LOST_CAVERN,
+    "Lost Cavern": Battleground.LOST_CAVERN,
+    "Caverna Perdida": Battleground.LOST_CAVERN,
+    "Caverna perdida": Battleground.LOST_CAVERN,
+    "Le caveau perdu": Battleground.LOST_CAVERN,
+    "Caverna Perduta": Battleground.LOST_CAVERN,
+    "잃어버린 동굴": Battleground.LOST_CAVERN,
+    "Zaginiona Pieczara": Battleground.LOST_CAVERN,
+    "Затерянный грот": Battleground.LOST_CAVERN,
+    "失落洞窟": Battleground.LOST_CAVERN,
+    # TODO: Add translations
+    "Pull Party": Battleground.PULL_PARTY,
+    # TODO: Add translations
+    "Silver City": Battleground.SILVER_CITY,
+    "Tempel des Himmels": Battleground.SKY_TEMPLE,
+    "Sky Temple": Battleground.SKY_TEMPLE,
+    "Templo Celeste": Battleground.SKY_TEMPLE,
+    "Templo celeste": Battleground.SKY_TEMPLE,
+    "Le temple céleste": Battleground.SKY_TEMPLE,
+    "Tempio Celeste": Battleground.SKY_TEMPLE,
+    "하늘 사원": Battleground.SKY_TEMPLE,
+    "Podniebna Świątynia": Battleground.SKY_TEMPLE,
+    "Небесный храм": Battleground.SKY_TEMPLE,
+    "天空殿": Battleground.SKY_TEMPLE,
+    "天空神殿": Battleground.SKY_TEMPLE,
+    "Grabkammer der Spinnenkönigin": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "Tomb Of The Spider Queen": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "Tumba de la Reina Araña": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "Tumba de la reina araña": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "La tombe de la reine araignée": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "Tomba della Regina Ragno": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "거미 여왕의 무덤": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "Grobowiec Pajęczej Królowej": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "Tumba da Aranha Rainha": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "Гробница Королевы Пауков": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "蛛后墓": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "蛛后之墓": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "Volskaya-Fertigung": Battleground.VOLSKAYA_FOUNDRY,
+    "Volskaya Foundry": Battleground.VOLSKAYA_FOUNDRY,
+    "Fundición de Volskaya": Battleground.VOLSKAYA_FOUNDRY,
+    "La fonderie Volskaya": Battleground.VOLSKAYA_FOUNDRY,
+    "Fonderia Volskaya": Battleground.VOLSKAYA_FOUNDRY,
+    "볼스카야 공장": Battleground.VOLSKAYA_FOUNDRY,
+    "Odlewnia Volskaya Industries": Battleground.VOLSKAYA_FOUNDRY,
+    "Fundição Volskaya": Battleground.VOLSKAYA_FOUNDRY,
+    "Завод Вольской": Battleground.VOLSKAYA_FOUNDRY,
+    "沃斯卡娅铸造厂": Battleground.VOLSKAYA_FOUNDRY,
+    "伏斯凱亞鑄造廠": Battleground.VOLSKAYA_FOUNDRY,
+    "Sprengkopfmanufaktur": Battleground.WARHEAD_JUNCTION,
+    "Warhead Junction": Battleground.WARHEAD_JUNCTION,
+    "Estación Nuclear": Battleground.WARHEAD_JUNCTION,
+    "Cruce nuclear": Battleground.WARHEAD_JUNCTION,
+    "Menace nucléaire": Battleground.WARHEAD_JUNCTION,
+    "Stazione Atomica": Battleground.WARHEAD_JUNCTION,
+    "핵탄두 격전지": Battleground.WARHEAD_JUNCTION,
+    "Poligon Nuklearny": Battleground.WARHEAD_JUNCTION,
+    "Junção da Ogiva": Battleground.WARHEAD_JUNCTION,
+    "Ядерный полигон": Battleground.WARHEAD_JUNCTION,
+    "弹头枢纽站": Battleground.WARHEAD_JUNCTION,
+    "核武戰地": Battleground.WARHEAD_JUNCTION,
+}
+
 
 def import_heroprotocol(base_build):
     try:
@@ -975,10 +1163,6 @@ def get_gamemode(gamemode_id: int):
     return gamemode
 
 
-def get_battleground(internal_name):
-    return _BATTLEGROUND_DICT[internal_name]
-
-
 def get_seconds(loops):
     return (loops - 610) / 16
 
@@ -994,8 +1178,17 @@ def get_hero_from_internal(internal_name):
 def get_hero_from_short(short_name):
     return _SHORT_HERO_DICT[short_name]
 
+
 def get_hero_from_localized(localized_name):
-    return LOCALIZED_HERO_DICT[localized_name]
+    return _LOCALIZED_HERO_DICT[localized_name]
+
+
+def get_battleground(internal_name):
+    return _BATTLEGROUND_DICT[internal_name]
+
+
+def get_battleground_from_localized(localized_name):
+    return _LOCALIZED_BATTLEGROUND_DICT[localized_name]
 
 
 def get_battletag(lobby_data, player_name):
