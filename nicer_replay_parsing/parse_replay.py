@@ -2,7 +2,14 @@ import hashlib
 from heroprotocol.versions import protocol96370
 import mpyq
 
-from .model import Battleground, Draft, Player, Replay, Team, Version
+from .model import (
+    DraftAction,
+    DraftActionType,
+    Player,
+    Replay,
+    Team,
+    Version,
+)
 from .util import *
 
 
@@ -34,7 +41,6 @@ def parse_replay(filename):
     players: dict[str, dict] = {}
     wss_to_player = {}
 
-    ai_count = 0
     for player in details["m_playerList"]:
         toon_handle = f"{player['m_toon']['m_region']}-{player['m_toon']['m_programId'].decode()}-{player['m_toon']["m_realm"]}-{player['m_toon']["m_id"]}"
         if toon_handle == "0-\x00\x00\x00\x00-0-0":
@@ -42,7 +48,12 @@ def parse_replay(filename):
         players[toon_handle] = {}
         players[toon_handle]["team"] = Team.RIGHT if player["m_teamId"] else Team.LEFT
         players[toon_handle]["name"] = player["m_name"]
-        players[toon_handle]["hero"] = get_hero_from_localized(player["m_hero"].decode())
+        localized_name = player["m_hero"].decode()
+        try:
+            hero = get_hero_from_localized(localized_name)
+        except KeyError:
+            hero = get_hero_from_localized(localized_name.lower())
+        players[toon_handle]["hero"] = hero
         players[toon_handle]["battletag"] = get_battletag(battlelobby, player["m_name"])
         wss_to_player[player["m_workingSetSlotId"]] = toon_handle
 
@@ -60,11 +71,10 @@ def parse_replay(filename):
 
     # Trackerevents
     duration = None
+    battleground = get_battleground_from_localized(details["m_title"].decode())
     tracker_ids_to_player: dict[int, str | None] = {}
     core_ids = []
-    ais = []
-    bans = {Team.LEFT: [], Team.RIGHT: []}
-    picks = {Team.LEFT: [], Team.RIGHT: []}
+    draft: list[DraftAction] = []
     firstpick = None
     incomplete = True
     for event in protocol.decode_replay_tracker_events(
@@ -74,7 +84,7 @@ def parse_replay(filename):
         if event["_eventid"] == 10 and event["m_eventName"].decode() == "PlayerInit":
             controller = event["m_stringData"][0]["m_value"].decode()
             if controller == "Computer":
-                ais.append(event["m_intData"][0]["m_value"])
+                raise NotImplementedError("Computer Player Found")
             elif controller == "None":
                 tracker_ids_to_player[event["m_intData"][0]["m_value"]] = None
             else:
@@ -82,30 +92,24 @@ def parse_replay(filename):
                     "m_stringData"
                 ][1]["m_value"].decode()
 
-
-        """ # Bans
+        # Bans
         if event["_event"] == "NNet.Replay.Tracker.SHeroBannedEvent":
             team = Team.LEFT if event["m_controllingTeam"] == 1 else Team.RIGHT
             if firstpick == None:
                 firstpick = team
             internal_hero_name = event["m_hero"].decode()
             hero = get_hero_from_internal(internal_hero_name)
-            bans[team].append(hero)
+            draft.append(DraftAction(DraftActionType.BAN, team, hero))
 
         # Picks
         if event["_event"] == "NNet.Replay.Tracker.SHeroPickedEvent":
-            wss_id = event["m_controllingPlayer"]
-            player_id = wss_to_player[wss_id]
-            if "hero" in players[player_id].keys():
-                continue
-            team = players[player_id]["team"]
+
             internal_hero_name = event["m_hero"].decode()
             hero = get_hero_from_internal(internal_hero_name)
-            picks[team].append(hero)
-            players[player_id]["hero"] = hero """
+            team = [p for p in players.values() if p["hero"] == hero][0]["team"]
+            draft.append(DraftAction(DraftActionType.PICK, team, hero))
 
-        # Heroes, level, battleground
-        battleground = Battleground.OTHER
+        # Level, winner, completeness
         if (
             event["_eventid"] == 10
             and event["m_eventName"].decode() == "EndOfGameTalentChoices"
@@ -119,12 +123,6 @@ def parse_replay(filename):
                 event["m_stringData"][1]["m_value"].decode() == "Win"
             )
             incomplete = False
-            internal_bg_name = event["m_stringData"][2]["m_value"].decode()
-            try:
-                battleground = get_battleground(internal_bg_name)
-            except KeyError:
-                battleground = Battleground.OTHER
-
         # Core (game time)
         if (
             event["_eventid"] == 1
@@ -140,10 +138,55 @@ def parse_replay(filename):
             last_gameloop = event["_gameloop"]
             duration = get_seconds(last_gameloop)
 
+    if len(draft) == 15:
+        missing_team = (
+            Team.LEFT
+            if len([a for a in draft if a.team == Team.LEFT]) == 7
+            else Team.RIGHT
+        )
+        missing_type = (
+            DraftActionType.PICK
+            if len([a for a in draft if a.type == DraftActionType.PICK]) == 9
+            else DraftActionType.BAN
+        )
+        missing_hero = None
+        if missing_type == DraftActionType.PICK:
+            heroes_in_draft = [
+                action.hero for action in draft if action.type == DraftActionType.PICK
+            ]
+            missing_hero = [
+                p["hero"] for p in players.values() if p["hero"] not in heroes_in_draft
+            ][0]
+
+        def is_ok(d):
+            for ban_pos in [0, 1, 2, 3, 9, 10]:
+                if d[ban_pos].type != DraftActionType.BAN:
+                    return False
+            for pick_pos in [4, 5, 6, 7, 8, 11, 12, 13, 14, 15]:
+                if d[pick_pos].type != DraftActionType.PICK:
+                    return False
+            for team_pos in [0, 2, 4, 7, 8, 10, 13, 14]:
+                if d[team_pos].team != firstpick:
+                    return False
+            for team_pos in [1, 3, 5, 6, 9, 11, 12, 15]:
+                if d[team_pos].team == firstpick:
+                    return False
+            return True
+
+        def fix_draft(_draft, _missing_move):
+            for i in range(16):
+                try_draft = _draft[:i] + [_missing_move] + _draft[i:]
+                if is_ok(try_draft):
+                    _draft = try_draft
+                    return _draft
+
+        missing_move = DraftAction(missing_type, missing_team, missing_hero)
+        draft = fix_draft(draft, missing_move)
 
     if len(tracker_ids_to_player.items()) == 0:
-        raise NotImplementedError("Parsing Sandbox/Escape From Braxis/... replays not supported")
-
+        raise NotImplementedError(
+            "Parsing Sandbox/Escape From Braxis/... replays not supported"
+        )
 
     # Building models
     player_models = ([], [])
@@ -156,9 +199,6 @@ def parse_replay(filename):
         hero_models[i].append(player["hero"])
         if "win" in player.keys() and player["win"]:
             winner = player["team"]
-    draft = None
-    if len(picks[Team.LEFT]) > 0:
-        draft = Draft(bans, picks, firstpick)
 
     return Replay(
         replay_id,
@@ -171,5 +211,5 @@ def parse_replay(filename):
         battleground,
         incomplete,
         winner,
-        draft,
+        draft if len(draft) == 16 else None,
     )
