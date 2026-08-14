@@ -47,47 +47,22 @@ class Gamemode(Enum):
     OTHER = "Other"
 
 
-class Draft:
-    def __init__(self, bans, picks, firstpick):
-        self.bans: dict[Team, tuple[Hero, ...]] = bans
-        self.picks: dict[Team, tuple[Hero, ...]] = picks
-        self.firstpick: Team = firstpick
+class DraftActionType(Enum):
+    BAN = "Ban"
+    PICK = "Pick"
 
     def __str__(self):
-        return str([str(hero) for hero in self.draft_order()])
+        return self.value
 
-    def draft_order(self):
-        fp = self.firstpick
-        sp = Team.LEFT if fp == Team.RIGHT else Team.RIGHT
-        return [
-            self.bans[fp][0],
-            self.bans[sp][0],
-            self.bans[fp][1],
-            self.bans[sp][1],
-            self.picks[fp][0],
-            self.picks[sp][0],
-            self.picks[sp][1],
-            self.picks[fp][1],
-            self.picks[fp][2],
-            self.bans[sp][2],
-            self.bans[fp][2],
-            self.picks[sp][2],
-            self.picks[sp][3],
-            self.picks[fp][3],
-            self.picks[fp][4],
-            self.picks[sp][4],
-        ]
 
-    def is_ok(self):
-        return (
-            len(self.bans[Team.LEFT]) == 3
-            and len(self.bans[Team.RIGHT]) == 3
-            and len(self.picks[Team.LEFT]) == 5
-            and len(self.picks[Team.RIGHT]) == 5
-        )
+class DraftAction:
+    def __init__(self, type: DraftActionType, team: Team, hero: Hero | None = None):
+        self.type: DraftActionType = type
+        self.team: Team = team
+        self.hero: Hero | None = hero
 
-    def state(self):
-        return "Available" if self.is_ok() else "Incomplete"
+    def __str__(self):
+        return f"{self.type} {self.team} {self.hero}"
 
 
 class Role(Enum):
@@ -249,7 +224,7 @@ class Replay:
         battleground: Battleground,
         incomplete: bool,
         winner: Team | None = None,
-        draft: Draft | None = None,
+        draft: list[DraftAction] | None = None,
     ):
         self.id: str = replay_id
         self.version: Version = version
@@ -261,7 +236,7 @@ class Replay:
         self.battleground: Battleground = battleground
         self.incomplete = incomplete
         self.winner: Team | None = winner
-        self.draft: Draft | None = draft
+        self.draft: list[DraftAction] | None = draft
 
     def __str__(self):
         return str(
@@ -278,7 +253,7 @@ class Replay:
                 ),
                 "Battleground": str(self.battleground),
                 "Winner": str(self.winner),
-                "Draft": self.draft.state() if self.draft else "None",
+                "Draft": [str(action) for action in self.draft] if self.draft else None,
             }
         )
 
