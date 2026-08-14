@@ -1,5 +1,5 @@
 from datetime import datetime
-from enum import Enum, auto
+from enum import Enum
 
 
 class Version:
@@ -16,8 +16,11 @@ class Version:
 
 
 class Team(Enum):
-    LEFT = auto()
-    RIGHT = auto()
+    LEFT = "Left"
+    RIGHT = "Right"
+
+    def __str__(self):
+        return self.value
 
 
 class Player:
