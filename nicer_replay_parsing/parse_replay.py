@@ -106,7 +106,12 @@ def parse_replay(filename):
 
             internal_hero_name = event["m_hero"].decode()
             hero = get_hero_from_internal(internal_hero_name)
-            team = [p for p in players.values() if p["hero"] == hero][0]["team"]
+            try:
+                team = [p for p in players.values() if p["hero"] == hero][0]["team"]
+            except IndexError:
+                # It's possible a replay got merged with a draft that isn't its own.
+                # Let's hope it's a dodge and single-hero exchange, which we can reconstruct later.
+                continue
             draft.append(DraftAction(DraftActionType.PICK, team, hero))
 
         # Level, winner, completeness
