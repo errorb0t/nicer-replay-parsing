@@ -184,6 +184,7 @@ def parse_replay(filename):
                 if is_ok(try_draft):
                     _draft = try_draft
                     return _draft
+            assert False
 
         missing_move = DraftAction(missing_type, missing_team, missing_hero)
         draft = fix_draft(draft, missing_move)
@@ -218,3 +219,53 @@ def parse_replay(filename):
         winner,
         draft if len(draft) == 16 else None,
     )
+
+
+def print_replay_contents(filename):
+    archive = mpyq.MPQArchive(filename)
+    contents = archive.header["user_data_header"]["content"]
+    header = protocol96370.decode_replay_header(contents)
+    version = Version(
+        header["m_version"]["m_baseBuild"],
+        header["m_version"]["m_major"],
+        header["m_version"]["m_minor"],
+        header["m_version"]["m_revision"],
+        header["m_version"]["m_build"],
+        header["m_version"]["m_flags"],
+    )
+
+    protocol = import_heroprotocol(version.base_build)
+    if protocol is None:
+        archive.file.close()
+        raise Exception("Unsupported Build")
+
+    # Details
+    details = protocol.decode_replay_details(archive.read_file("replay.details"))
+
+    contents = archive.read_file("replay.details")
+    details = protocol.decode_replay_details(contents)
+    print(details)
+
+    contents = archive.read_file("replay.initData")
+    initdata = protocol.decode_replay_initdata(contents)
+    print(
+        initdata["m_syncLobbyState"]["m_gameDescription"]["m_cacheHandles"],
+    )
+    print(initdata)
+
+    contents = archive.read_file("replay.game.events")
+    for event in protocol.decode_replay_game_events(contents):
+        print(event)
+
+    contents = archive.read_file("replay.message.events")
+    for event in protocol.decode_replay_message_events(contents):
+        print(event)
+
+    if hasattr(protocol, "decode_replay_tracker_events"):
+        contents = archive.read_file("replay.tracker.events")
+        for event in protocol.decode_replay_tracker_events(contents):
+            print(event)
+
+    contents = archive.read_file("replay.attributes.events")
+    attributes = protocol.decode_replay_attributes_events(contents)
+    print(attributes)
