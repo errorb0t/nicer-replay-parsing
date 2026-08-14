@@ -189,6 +189,7 @@ class Battleground(Enum):
     ESCAPE_FROM_BRAXIS = ("Escape From Braxis", 0)
     ESCAPE_FROM_BRAXIS_HEROIC = ("Escape From Braxis (Heroic)", 0)
     GARDEN_OF_TERROR = ("Garden of Terror", 3)
+    GARDEN_OF_TERROR_CLASSIC = ("Garden of Terror Classic", 3)
     HANAMURA_TEMPLE = ("Hanamura Temple", 2)
     HAUNTED_MINES = ("Haunted Mines", 2)
     INDUSTRIAL_DISTRICT = ("Industrial District", 1)
