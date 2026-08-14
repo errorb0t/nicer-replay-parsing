@@ -911,7 +911,7 @@ _LOCALIZED_HERO_DICT: dict[str, Hero] = {
     "\u7956\u5c14\u91d1": Hero.ZULJIN,
     "\u7956\u723e\u91d1": Hero.ZULJIN,
 }
-_BATTLEGROUND_DICT = {
+_INTERNAL_BATTLEGROUND_DICT = {
     "BattlefieldOfEternity": Battleground.BATTLEFIELD_OF_ETERNITY,
     "BlackheartsBay": Battleground.BLACKHEARTS_BAY,
     "BraxisHoldout": Battleground.BRAXIS_HOLDOUT,
@@ -984,10 +984,28 @@ _LOCALIZED_BATTLEGROUND_DICT = {
     "Бойня на Браксисе": Battleground.BRAXIS_HOLDOUT,
     "布莱克西斯禁区": Battleground.BRAXIS_HOLDOUT,
     "布萊西斯實驗所": Battleground.BRAXIS_HOLDOUT,
-    # TODO: Add translations
+    "Außenposten Braxis": Battleground.BRAXIS_OUTPOST,
     "Braxis Outpost": Battleground.BRAXIS_OUTPOST,
-    # TODO: Add translations
+    "Avanzada de Braxis": Battleground.BRAXIS_OUTPOST,
+    "Puesto de avanzada de Braxis": Battleground.BRAXIS_OUTPOST,
+    "L’avant-poste de Braxis": Battleground.BRAXIS_OUTPOST,
+    "Avamposto di Braxis": Battleground.BRAXIS_OUTPOST,
+    "브락시스 전초기지": Battleground.BRAXIS_OUTPOST,
+    "Posterunek na Braxis": Battleground.BRAXIS_OUTPOST,
+    "Posto Avançado Braxis": Battleground.BRAXIS_OUTPOST,
+    "Аванпост на Браксисе": Battleground.BRAXIS_OUTPOST,
+    "布莱克西斯前哨": Battleground.BRAXIS_OUTPOST,
+    "布萊西斯哨站": Battleground.BRAXIS_OUTPOST,
+    # TODO: Add German
     "Checkpoint: Hanamura": Battleground.CHECKPOINT_HANAMURA,
+    "Punto de control: Hanamura": Battleground.CHECKPOINT_HANAMURA,
+    "Point de contrôle : Hanamura": Battleground.CHECKPOINT_HANAMURA,
+    "경유지: 하나무라": Battleground.CHECKPOINT_HANAMURA,
+    "Punkt Kontrolny: Hanamura": Battleground.CHECKPOINT_HANAMURA,
+    "Ponto de Controle: Hanamura": Battleground.CHECKPOINT_HANAMURA,
+    "Контрольная точка: Ханамура": Battleground.CHECKPOINT_HANAMURA,
+    "检查点：花村": Battleground.CHECKPOINT_HANAMURA,
+    "激戰花村": Battleground.CHECKPOINT_HANAMURA,
     "Verfluchtes Tal": Battleground.CURSED_HOLLOW,
     "Cursed Hollow": Battleground.CURSED_HOLLOW,
     "Cuenca Maldita": Battleground.CURSED_HOLLOW,
@@ -1012,10 +1030,29 @@ _LOCALIZED_BATTLEGROUND_DICT = {
     "Драконий край": Battleground.DRAGON_SHIRE,
     "巨龙镇": Battleground.DRAGON_SHIRE,
     "巨龍郡": Battleground.DRAGON_SHIRE,
-    # TODO: Add translations
+    "Flucht von Braxis": Battleground.ESCAPE_FROM_BRAXIS,
     "Escape From Braxis": Battleground.ESCAPE_FROM_BRAXIS,
-    # TODO: Add translations
+    "Fuga de Braxis": Battleground.ESCAPE_FROM_BRAXIS,
+    "Escape de Braxis": Battleground.ESCAPE_FROM_BRAXIS,
+    "La fuite de Braxis": Battleground.ESCAPE_FROM_BRAXIS,
+    "Fuga da Braxis": Battleground.ESCAPE_FROM_BRAXIS,
+    "브락시스 탈출": Battleground.ESCAPE_FROM_BRAXIS,
+    "Ucieczka z Braxis": Battleground.ESCAPE_FROM_BRAXIS,
+    "Fuga de Braxis": Battleground.ESCAPE_FROM_BRAXIS,
+    "Побег с Браксиса": Battleground.ESCAPE_FROM_BRAXIS,
+    "逃离布莱克西斯": Battleground.ESCAPE_FROM_BRAXIS,
+    "逃離布萊西斯": Battleground.ESCAPE_FROM_BRAXIS,
     "Escape From Braxis (Heroic)": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
+    "Fuga de Braxis (heroico)": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
+    "Escape de Braxis (Heroico)": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
+    "La fuite de Braxis (héroïque)": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
+    "Fuga da Braxis (Eroica)": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
+    # TODO: Add Korean
+    "Heroiczna Ucieczka z Braxis": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
+    "Fuga de Braxis (Heroico)": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
+    "Героический побег с Браксиса": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
+    "逃离布莱克西斯（英雄难度）": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
+    "逃離布萊西斯（英雄模式）": Battleground.ESCAPE_FROM_BRAXIS_HEROIC,
     "Garten der Ängste": Battleground.GARDEN_OF_TERROR,
     "Garden of Terror": Battleground.GARDEN_OF_TERROR,
     "Jardín del Terror": Battleground.GARDEN_OF_TERROR,
@@ -1062,8 +1099,18 @@ _LOCALIZED_BATTLEGROUND_DICT = {
     "Призрачные копи": Battleground.HAUNTED_MINES,
     "鬼灵矿": Battleground.HAUNTED_MINES,
     "亡骸礦坑": Battleground.HAUNTED_MINES,
-    # TODO: Add translations
+    "Industriebezirk": Battleground.INDUSTRIAL_DISTRICT,
     "Industrial District": Battleground.INDUSTRIAL_DISTRICT,
+    "Distrito Industrial": Battleground.INDUSTRIAL_DISTRICT,
+    "Distrito industrial": Battleground.INDUSTRIAL_DISTRICT,
+    "Le district industriel": Battleground.INDUSTRIAL_DISTRICT,
+    "Distretto Industriale": Battleground.INDUSTRIAL_DISTRICT,
+    "공업 지구": Battleground.INDUSTRIAL_DISTRICT,
+    "Dzielnica Przemysłowa": Battleground.INDUSTRIAL_DISTRICT,
+    "Distrito Industrial": Battleground.INDUSTRIAL_DISTRICT,
+    "Промзона": Battleground.INDUSTRIAL_DISTRICT,
+    "工业园区": Battleground.INDUSTRIAL_DISTRICT,
+    "機戰工業區": Battleground.INDUSTRIAL_DISTRICT,
     "Höllenschreine": Battleground.INFERNAL_SHRINES,
     "Infernal Shrines": Battleground.INFERNAL_SHRINES,
     "Santuarios Infernales": Battleground.INFERNAL_SHRINES,
@@ -1086,8 +1133,18 @@ _LOCALIZED_BATTLEGROUND_DICT = {
     "Zaginiona Pieczara": Battleground.LOST_CAVERN,
     "Затерянный грот": Battleground.LOST_CAVERN,
     "失落洞窟": Battleground.LOST_CAVERN,
-    # TODO: Add translations
+    "Ich glaub, es hakt": Battleground.PULL_PARTY,
     "Pull Party": Battleground.PULL_PARTY,
+    "Echar el gancho": Battleground.PULL_PARTY,
+    "Fiesta de ganchos": Battleground.PULL_PARTY,
+    "Accro au crochet": Battleground.PULL_PARTY,
+    "Agganci pericolosi": Battleground.PULL_PARTY,
+    "갈고리 파티": Battleground.PULL_PARTY,
+    "Impreza przy Basenie": Battleground.PULL_PARTY,
+    "Puxa-puxa": Battleground.PULL_PARTY,
+    "Притягательные личности": Battleground.PULL_PARTY,
+    "拉钩派对": Battleground.PULL_PARTY,
+    "鉤鉤派對": Battleground.PULL_PARTY,
     "Silberne Stadt": Battleground.SILVER_CITY,
     "Silver City": Battleground.SILVER_CITY,
     "Ciudad de Plata": Battleground.SILVER_CITY,
@@ -1217,8 +1274,8 @@ def get_hero_from_localized(localized_name):
     return _LOCALIZED_HERO_DICT[localized_name]
 
 
-def get_battleground(internal_name):
-    return _BATTLEGROUND_DICT[internal_name]
+def get_battleground_from_internal(internal_name):
+    return _INTERNAL_BATTLEGROUND_DICT[internal_name]
 
 
 def get_battleground_from_localized(localized_name):
