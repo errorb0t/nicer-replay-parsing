@@ -46,6 +46,9 @@ class Gamemode(Enum):
     STORM_LEAGUE = "Storm League"
     OTHER = "Other"
 
+    def __str__(self):
+        return self.value
+
 
 class DraftActionType(Enum):
     BAN = "Ban"
