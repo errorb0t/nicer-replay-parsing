@@ -13,8 +13,8 @@ from .model import (
 from .util import *
 
 
-def parse_replay(filename):
-    archive = mpyq.MPQArchive(filename)
+def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
+    archive = mpyq.MPQArchive(filepath)
     contents = archive.header["user_data_header"]["content"]
     header = protocol96370.decode_replay_header(contents)
     version = Version(
@@ -63,11 +63,17 @@ def parse_replay(filename):
         initdata["m_syncLobbyState"]["m_gameDescription"]["m_gameOptions"]["m_ammId"]
     )
 
+    if gamemode_filter and gamemode not in gamemode_filter:
+        return None
+
     random_value = initdata["m_syncLobbyState"]["m_gameDescription"]["m_randomValue"]
     id_string = "".join(
         sorted([str(player["m_toon"]["m_id"]) for player in details["m_playerList"]])
     )
     replay_id = hashlib.md5((id_string + str(random_value)).encode()).hexdigest()
+
+    if replay_id in known_replay_ids:
+        return None
 
     # Trackerevents
     duration = None
