@@ -138,7 +138,10 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
         if (
             event["_eventid"] == 1
             and event["_event"] == "NNet.Replay.Tracker.SUnitBornEvent"
-            and event["m_unitTypeName"].decode() == "KingsCore"
+            and (
+                event["m_unitTypeName"].decode()
+                in ["KingsCore", "VanndarStormpike", "DrekThar"]
+            )
         ):
             core_ids.append((event["m_unitTagIndex"], event["m_unitTagRecycle"]))
         if (
