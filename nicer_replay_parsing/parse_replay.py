@@ -224,6 +224,7 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
         incomplete,
         winner,
         draft if len(draft) == 16 else None,
+        firstpick,
     )
 
 

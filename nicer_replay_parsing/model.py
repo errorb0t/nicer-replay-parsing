@@ -229,6 +229,7 @@ class Replay:
         incomplete: bool,
         winner: Team | None = None,
         draft: list[DraftAction] | None = None,
+        firstpick: Team | None = None,
     ):
         self.id: str = replay_id
         self.version: Version = version
@@ -241,6 +242,7 @@ class Replay:
         self.incomplete = incomplete
         self.winner: Team | None = winner
         self.draft: list[DraftAction] | None = draft
+        self.firstpick: Team | None = firstpick
 
     def __str__(self):
         return str(
