@@ -188,6 +188,7 @@ class Battleground(Enum):
     BRAXIS_OUTPOST = ("Braxis Outpost", 1)
     CHECKPOINT_HANAMURA = ("Checkpoint: Hanamura", 0)
     CURSED_HOLLOW = ("Cursed Hollow", 3)
+    DEADMANS_STAND = ("Deadman's Stand", 0)
     DRAGON_SHIRE = ("Dragon Shire", 3)
     ESCAPE_FROM_BRAXIS = ("Escape From Braxis", 0)
     ESCAPE_FROM_BRAXIS_HEROIC = ("Escape From Braxis (Heroic)", 0)
