@@ -77,7 +77,10 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
 
     # Trackerevents
     duration = None
-    battleground = get_battleground_from_localized(details["m_title"].decode())
+    try:
+        battleground = get_battleground_from_localized(details["m_title"].decode())
+    except KeyError:
+        raise NotImplementedError("Unknown Battleground")
     tracker_ids_to_player: dict[int, str | None] = {}
     core_ids = []
     draft: list[DraftAction] = []
@@ -116,7 +119,6 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
                 team = [p for p in players.values() if p["hero"] == hero][0]["team"]
             except IndexError:
                 # It's possible a replay got merged with a draft that isn't its own.
-                # Let's hope it's a dodge and single-hero exchange, which we can reconstruct later.
                 continue
             draft.append(DraftAction(DraftActionType.PICK, team, hero))
 
@@ -126,7 +128,11 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
             and event["m_eventName"].decode() == "EndOfGameTalentChoices"
         ):
             tracker_id = event["m_intData"][0]["m_value"]
-            player_id = tracker_ids_to_player[tracker_id]
+            try:
+                player_id = tracker_ids_to_player[tracker_id]
+            except KeyError:
+                # We're perhaps on a weird map like Checkpoint Hanamura
+                player_id = None
             if player_id == None:
                 continue
             players[player_id]["level"] = event["m_intData"][1]["m_value"]
@@ -152,51 +158,26 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
             last_gameloop = event["_gameloop"]
             duration = get_seconds(last_gameloop)
 
-    if len(draft) == 15:
-        missing_team = (
-            Team.LEFT
-            if len([a for a in draft if a.team == Team.LEFT]) == 7
-            else Team.RIGHT
-        )
-        missing_type = (
-            DraftActionType.PICK
-            if len([a for a in draft if a.type == DraftActionType.PICK]) == 9
-            else DraftActionType.BAN
-        )
-        missing_hero = None
-        if missing_type == DraftActionType.PICK:
-            heroes_in_draft = [
-                action.hero for action in draft if action.type == DraftActionType.PICK
-            ]
-            missing_hero = [
-                p["hero"] for p in players.values() if p["hero"] not in heroes_in_draft
-            ][0]
+    if (
+        len(draft) != 16
+        or len(set([a for a in draft if a.type == DraftActionType.PICK])) != 10
+    ):
+        # Something is majorly wrong with draft data.
+        draft = []
 
-        def is_ok(d):
-            for ban_pos in [0, 1, 2, 3, 9, 10]:
-                if d[ban_pos].type != DraftActionType.BAN:
-                    return False
-            for pick_pos in [4, 5, 6, 7, 8, 11, 12, 13, 14, 15]:
-                if d[pick_pos].type != DraftActionType.PICK:
-                    return False
-            for team_pos in [0, 2, 4, 7, 8, 10, 13, 14]:
-                if d[team_pos].team != firstpick:
-                    return False
-            for team_pos in [1, 3, 5, 6, 9, 11, 12, 15]:
-                if d[team_pos].team == firstpick:
-                    return False
-            return True
-
-        def fix_draft(_draft, _missing_move):
-            for i in range(16):
-                try_draft = _draft[:i] + [_missing_move] + _draft[i:]
-                if is_ok(try_draft):
-                    _draft = try_draft
-                    return _draft
-            assert False
-
-        missing_move = DraftAction(missing_type, missing_team, missing_hero)
-        draft = fix_draft(draft, missing_move)
+    for team in [Team.LEFT, Team.RIGHT]:
+        if (
+            len(
+                [
+                    action
+                    for action in draft
+                    if action.type == DraftActionType.PICK and action.team == team
+                ]
+            )
+            != 5
+        ):
+            # There are not exactly 5 heroes on each team
+            draft = []
 
     if len(tracker_ids_to_player.items()) == 0:
         raise NotImplementedError(
