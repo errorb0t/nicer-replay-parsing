@@ -200,6 +200,7 @@ class Battleground(Enum):
     LOST_CAVERN = ("Lost Cavern", 1)
     PULL_PARTY = ("Pull Party", 0)
     SILVER_CITY = ("Silver City", 1)
+    SNOW_BRAWL = ("Snow Brawl", 3)
     SKY_TEMPLE = ("Sky Temple", 3)
     TOMB_OF_THE_SPIDER_QUEEN = ("Tomb of the Spider Queen", 3)
     TOWERS_OF_DOOM = ("Towers of Doom", 3)
