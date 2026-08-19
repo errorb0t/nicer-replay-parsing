@@ -59,9 +59,21 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
 
     # Initdata
     initdata = protocol.decode_replay_initdata(archive.read_file("replay.initData"))
-    gamemode = get_gamemode(
-        initdata["m_syncLobbyState"]["m_gameDescription"]["m_gameOptions"]["m_ammId"]
-    )
+    gamemode = None
+    try:
+        gamemode = get_gamemode(
+            initdata["m_syncLobbyState"]["m_gameDescription"]["m_gameOptions"][
+                "m_ammId"
+            ]
+        )
+    except KeyError:
+        # Oh boy, it's a very old replay.
+        game_options = initdata["m_syncLobbyState"]["m_gameDescription"][
+            "m_gameOptions"
+        ]
+        gamemode = get_gamemode_from_old_gameoptions(game_options)
+    if gamemode == None:
+        gamemode = Gamemode.OTHER
 
     if gamemode_filter and gamemode not in gamemode_filter:
         return None
@@ -212,7 +224,15 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
     )
 
 
-def print_replay_contents(filename):
+def print_replay_contents(
+    filename,
+    print_details=True,
+    print_initdata=True,
+    print_gameevents=True,
+    print_messageevents=True,
+    print_trackerevents=True,
+    print_attributeevents=True,
+):
     archive = mpyq.MPQArchive(filename)
     contents = archive.header["user_data_header"]["content"]
     header = protocol96370.decode_replay_header(contents)
@@ -230,33 +250,35 @@ def print_replay_contents(filename):
         archive.file.close()
         raise Exception("Unsupported Build")
 
-    # Details
-    details = protocol.decode_replay_details(archive.read_file("replay.details"))
+    if print_details:
+        contents = archive.read_file("replay.details")
+        details = protocol.decode_replay_details(contents)
+        print(details)
 
-    contents = archive.read_file("replay.details")
-    details = protocol.decode_replay_details(contents)
-    print(details)
+    if print_initdata:
+        contents = archive.read_file("replay.initData")
+        initdata = protocol.decode_replay_initdata(contents)
+        print(
+            initdata["m_syncLobbyState"]["m_gameDescription"]["m_cacheHandles"],
+        )
+        print(initdata)
 
-    contents = archive.read_file("replay.initData")
-    initdata = protocol.decode_replay_initdata(contents)
-    print(
-        initdata["m_syncLobbyState"]["m_gameDescription"]["m_cacheHandles"],
-    )
-    print(initdata)
+    if print_gameevents:
+        contents = archive.read_file("replay.game.events")
+        for event in protocol.decode_replay_game_events(contents):
+            print(event)
 
-    contents = archive.read_file("replay.game.events")
-    for event in protocol.decode_replay_game_events(contents):
-        print(event)
+    if print_messageevents:
+        contents = archive.read_file("replay.message.events")
+        for event in protocol.decode_replay_message_events(contents):
+            print(event)
 
-    contents = archive.read_file("replay.message.events")
-    for event in protocol.decode_replay_message_events(contents):
-        print(event)
-
-    if hasattr(protocol, "decode_replay_tracker_events"):
+    if print_trackerevents and hasattr(protocol, "decode_replay_tracker_events"):
         contents = archive.read_file("replay.tracker.events")
         for event in protocol.decode_replay_tracker_events(contents):
             print(event)
 
-    contents = archive.read_file("replay.attributes.events")
-    attributes = protocol.decode_replay_attributes_events(contents)
-    print(attributes)
+    if print_attributeevents:
+        contents = archive.read_file("replay.attributes.events")
+        attributes = protocol.decode_replay_attributes_events(contents)
+        print(attributes)
