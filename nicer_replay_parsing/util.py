@@ -1414,6 +1414,7 @@ _LOCALIZED_BATTLEGROUND_DICT = {
     "Grobowiec Pajęczej Królowej": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
     "Tumba da Aranha Rainha": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
     "Гробница Королевы Пауков": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "Гробница королевы пауков": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
     "蛛后墓": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
     "蛛后之墓": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
     "Türme des Unheils": Battleground.TOWERS_OF_DOOM,
