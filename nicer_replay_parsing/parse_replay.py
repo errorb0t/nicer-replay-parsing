@@ -13,7 +13,7 @@ from .model import (
 from .util import *
 
 
-def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
+def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]) -> Replay:
     archive = mpyq.MPQArchive(filepath)
     contents = archive.header["user_data_header"]["content"]
     header = protocol96370.decode_replay_header(contents)
@@ -60,6 +60,7 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
     # Initdata
     initdata = protocol.decode_replay_initdata(archive.read_file("replay.initData"))
     gamemode = None
+    old_replay = False
     try:
         gamemode = get_gamemode(
             initdata["m_syncLobbyState"]["m_gameDescription"]["m_gameOptions"][
@@ -68,6 +69,7 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
         )
     except KeyError:
         # Oh boy, it's a very old replay.
+        old_replay = True
         game_options = initdata["m_syncLobbyState"]["m_gameDescription"][
             "m_gameOptions"
         ]
@@ -190,11 +192,6 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]):
         ):
             # There are not exactly 5 heroes on each team
             draft = []
-
-    if len(tracker_ids_to_player.items()) == 0:
-        raise NotImplementedError(
-            "Parsing Sandbox/Escape From Braxis/... replays not supported"
-        )
 
     # Building models
     player_models = ([], [])

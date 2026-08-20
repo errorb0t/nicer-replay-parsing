@@ -962,8 +962,21 @@ _LOCALIZED_BATTLEGROUND_DICT = {
     "Азмоданк": Battleground.AZMODUNK,
     "阿兹乔丹乱斗": Battleground.AZMODUNK,
     "阿茲喬丹大亂鬥": Battleground.AZMODUNK,
+    "Stählerne Giganten": Battleground.BASH_EM_SMASH_EM,
+    "Bash 'Em Smash 'Em Robots": Battleground.BASH_EM_SMASH_EM,
+    "Guerra de robots": Battleground.BASH_EM_SMASH_EM,
+    "¡Aplástenlos, robots!": Battleground.BASH_EM_SMASH_EM,
+    "obots boxeurs": Battleground.BASH_EM_SMASH_EM,
+    "La Guerra dei Robottoni": Battleground.BASH_EM_SMASH_EM,
+    "뚜까뚜까 로봇": Battleground.BASH_EM_SMASH_EM,
+    "Bójki Robotów": Battleground.BASH_EM_SMASH_EM,
+    "Robôs do barulho": Battleground.BASH_EM_SMASH_EM,
+    "Ломай-круши": Battleground.BASH_EM_SMASH_EM,
+    "机器人肉搏": Battleground.BASH_EM_SMASH_EM,
+    "超暴力格鬥機器人": Battleground.BASH_EM_SMASH_EM,
     "Schlachtfeld der Ewigkeit": Battleground.BATTLEFIELD_OF_ETERNITY,
     "Battlefield of Eternity": Battleground.BATTLEFIELD_OF_ETERNITY,
+    "Battlefield Of Eternity": Battleground.BATTLEFIELD_OF_ETERNITY,
     "Campos de Batalla de la Eternidad": Battleground.BATTLEFIELD_OF_ETERNITY,
     "Campo de batalla de la Eternidad": Battleground.BATTLEFIELD_OF_ETERNITY,
     "Les champs de l’éternité": Battleground.BATTLEFIELD_OF_ETERNITY,
@@ -1009,6 +1022,18 @@ _LOCALIZED_BATTLEGROUND_DICT = {
     "Кровожадная потасовка": Battleground.BLOODLUST_BRAWL,
     "嗜血乱斗": Battleground.BLOODLUST_BRAWL,
     "嗜血大亂鬥": Battleground.BLOODLUST_BRAWL,
+    "Goldene Zeiten": Battleground.BOOTY_COFFERS,
+    "Booty Coffers": Battleground.BOOTY_COFFERS,
+    "Arcas de botín": Battleground.BOOTY_COFFERS,
+    "Doblones a montones": Battleground.BOOTY_COFFERS,
+    "Pêche au butin": Battleground.BOOTY_COFFERS,
+    "Bottino dei Pirati": Battleground.BOOTY_COFFERS,
+    "금화를 바쳐라": Battleground.BOOTY_COFFERS,
+    "Kufry Umarlaka": Battleground.BOOTY_COFFERS,
+    "Caixotão do Butim!": Battleground.BOOTY_COFFERS,
+    "Сундук мертвеца": Battleground.BOOTY_COFFERS,
+    "夺宝大战": Battleground.BOOTY_COFFERS,
+    "黑心寶藏": Battleground.BOOTY_COFFERS,
     "Endstation Braxis": Battleground.BRAXIS_HOLDOUT,
     "Braxis Holdout": Battleground.BRAXIS_HOLDOUT,
     "Resistencia en Braxis": Battleground.BRAXIS_HOLDOUT,
@@ -1078,6 +1103,18 @@ _LOCALIZED_BATTLEGROUND_DICT = {
     "Героический «Мертвецкий рубеж»": Battleground.DEADMANS_STAND_HEROIC,
     "亡者卫城(英雄)": Battleground.DEADMANS_STAND_HEROIC,
     "死守亡人港（英雄模式）": Battleground.DEADMANS_STAND_HEROIC,
+    "Triff den Gnom": Battleground.DODGE_BRAWL,
+    "Dodge-BRAWL": Battleground.DODGE_BRAWL,
+    "CONTIENDA de Quemados": Battleground.DODGE_BRAWL,
+    "Quei-MATO!": Battleground.DODGE_BRAWL,
+    "TEMPS-balle pas": Battleground.DODGE_BRAWL,
+    "Palla Prigioniera": Battleground.DODGE_BRAWL,
+    "피구왕 크로미": Battleground.DODGE_BRAWL,
+    "Z(a)bijak": Battleground.DODGE_BRAWL,
+    "Balón piscinero": Battleground.DODGE_BRAWL,
+    "Вышибалы": Battleground.DODGE_BRAWL,
+    "躲避球大作战": Battleground.DODGE_BRAWL,
+    "躲避球大亂鬥": Battleground.DODGE_BRAWL,
     "Drachengärten": Battleground.DRAGON_SHIRE,
     "Dragon Shire": Battleground.DRAGON_SHIRE,
     "Condado del Dragón": Battleground.DRAGON_SHIRE,
@@ -1272,6 +1309,18 @@ _LOCALIZED_BATTLEGROUND_DICT = {
     "Войны магов": Battleground.MAGE_WARS,
     "魔法大战": Battleground.MAGE_WARS,
     "法師大戰": Battleground.MAGE_WARS,
+    "Mineralienfieber": Battleground.MINERAL_MADNESS,
+    "Mineral Madness": Battleground.MINERAL_MADNESS,
+    "Locura mineral": Battleground.MINERAL_MADNESS,
+    "¡Más minerales!": Battleground.MINERAL_MADNESS,
+    "Minerai en folie": Battleground.MINERAL_MADNESS,
+    "Corsa ai Minerali": Battleground.MINERAL_MADNESS,
+    "광물이 더 필요합니다: Battleground.MINERAL_MADNESS,"
+    "Gorączka minerałów": Battleground.MINERAL_MADNESS,
+    "Minério-Mania!": Battleground.MINERAL_MADNESS,
+    "Минеральное безумие": Battleground.MINERAL_MADNESS,
+    "晶矿大战": Battleground.MINERAL_MADNESS,
+    "晶礦爭奪戰": Battleground.MINERAL_MADNESS,
     "Ich glaub, es hakt": Battleground.PULL_PARTY,
     "Pull Party": Battleground.PULL_PARTY,
     "Echar el gancho": Battleground.PULL_PARTY,
@@ -1331,6 +1380,18 @@ _LOCALIZED_BATTLEGROUND_DICT = {
     "Небесный храм": Battleground.SKY_TEMPLE,
     "天空殿": Battleground.SKY_TEMPLE,
     "天空神殿": Battleground.SKY_TEMPLE,
+    "Speziallieferung": Battleground.SPECIAL_DELIVERY,
+    "Special Delivery": Battleground.SPECIAL_DELIVERY,
+    "Entrega especial": Battleground.SPECIAL_DELIVERY,
+    "Entrega especial": Battleground.SPECIAL_DELIVERY,
+    "Livraison spéciale": Battleground.SPECIAL_DELIVERY,
+    "Consegna Speciale": Battleground.SPECIAL_DELIVERY,
+    "특급 배송": Battleground.SPECIAL_DELIVERY,
+    "Przesyłka Specjalna": Battleground.SPECIAL_DELIVERY,
+    "Entrega Especial": Battleground.SPECIAL_DELIVERY,
+    "Срочная доставка": Battleground.SPECIAL_DELIVERY,
+    "特别快递": Battleground.SPECIAL_DELIVERY,
+    "特別篇": Battleground.SPECIAL_DELIVERY,
     "Tempelarena": Battleground.TEMPLE_ARENA,
     "Temple Arena": Battleground.TEMPLE_ARENA,
     "Arena del Templo": Battleground.TEMPLE_ARENA,
@@ -1344,6 +1405,7 @@ _LOCALIZED_BATTLEGROUND_DICT = {
     "神殿競技場": Battleground.TEMPLE_ARENA,
     "Grabkammer der Spinnenkönigin": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
     "Tomb of the Spider Queen": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
+    "Tomb Of The Spider Queen": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
     "Tumba de la Reina Araña": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
     "Tumba de la reina araña": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
     "La tombe de la reine araignée": Battleground.TOMB_OF_THE_SPIDER_QUEEN,
@@ -1443,13 +1505,15 @@ def get_gamemode(gamemode_id: int):
 def get_gamemode_from_old_gameoptions(opts):
     if not opts["m_amm"]:
         return Gamemode.CUSTOM
+    if "m_ranked" not in opts.keys():
+        return Gamemode.QUICK_MATCH
     if opts["m_ranked"]:
         return Gamemode.HERO_LEAGUE
     if opts["m_cooperative"]:
         return Gamemode.VERSUS_AI
-    if opts["m_heroDuplicatesAllowed"]:
+    if "m_heroDiplicatesAllowed" not in opts.keys() or opts["m_heroDuplicatesAllowed"]:
         return Gamemode.QUICK_MATCH
-    return Gamemode.UNRANKED_DRAFT
+    return Gamemode.OTHER
 
 
 def get_seconds(loops):
