@@ -1517,8 +1517,8 @@ def get_gamemode_from_old_gameoptions(opts):
     return Gamemode.OTHER
 
 
-def get_seconds(loops):
-    return (loops - 610) / 16
+def get_seconds(loops) -> int:
+    return (loops - 610) // 16
 
 
 def get_date(time_utc):
