@@ -229,6 +229,8 @@ class Battleground(Enum):
     MINERAL_MADNESS = ("Mineral Madness", 0)
     PULL_PARTY = ("Pull Party", 0)
     PUNISHER_ARENA = ("Punisher Arena", 0)
+    SANDBOX_CURSED_HOLLOW = ("Sandbox (Cursed Hollow)", 3)
+    SANDBOX_VOLSKAYA_FOUNDRY = ("Sandbox (Volskaya Foundry)", 3)
     SILVER_CITY = ("Silver City", 1)
     SNOW_BRAWL = ("Snow Brawl", 3)
     SKY_TEMPLE = ("Sky Temple", 3)
