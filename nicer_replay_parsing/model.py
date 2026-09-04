@@ -29,6 +29,9 @@ class Player:
         self.display_name: str = display_name
         self.battletag: str = battletag
 
+    def __eq__(self, other):
+        return type(other) == Player and self.id == other.id
+
     def __str__(self):
         return self.battletag
 
@@ -66,6 +69,16 @@ class DraftAction:
 
     def __str__(self):
         return f"{self.type} {self.team} {self.hero}"
+
+
+class ChatMessage:
+    def __init__(self, send_time: int, author: Player, content: str):
+        self.send_time: int = send_time
+        self.author: Player = author
+        self.content: str = content
+
+    def __str__(self):
+        return f"[{self.send_time // 60}:{(self.send_time % 60):02}] {self.author}: {self.content}"
 
 
 class Role(Enum):
@@ -251,6 +264,7 @@ class Replay:
         winner: Team | None = None,
         draft: list[DraftAction] | None = None,
         firstpick: Team | None = None,
+        chat: list[str] = [],
     ):
         self.id: str = replay_id
         self.version: Version = version
@@ -264,6 +278,7 @@ class Replay:
         self.winner: Team | None = winner
         self.draft: list[DraftAction] | None = draft
         self.firstpick: Team | None = firstpick
+        self.chat: list[str] = chat
 
     def __str__(self):
         return str(
