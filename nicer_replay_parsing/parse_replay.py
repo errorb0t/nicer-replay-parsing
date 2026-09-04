@@ -55,9 +55,19 @@ def parse_replay(
         try:
             hero = get_hero_from_localized(localized_name)
         except KeyError:
-            hero = get_hero_from_localized(localized_name.lower())
+            try:
+                hero = get_hero_from_localized(localized_name.lower())
+            except KeyError:
+                # We're on a weird singleplayer map with custom heroes
+                raise NotImplementedError("Unsupported Game Type")
         players[toon_handle]["hero"] = hero
-        players[toon_handle]["battletag"] = get_battletag(battlelobby, player["m_name"])
+        try:
+            players[toon_handle]["battletag"] = get_battletag(
+                battlelobby, player["m_name"]
+            )
+        except TypeError:
+            # We're on a weird singleplayer map again
+            raise NotImplementedError("Unsupported Game Type")
         wss_to_player[player["m_workingSetSlotId"]] = toon_handle
 
     # Initdata
