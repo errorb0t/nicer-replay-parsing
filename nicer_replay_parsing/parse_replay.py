@@ -3,6 +3,7 @@ from heroprotocol.versions import protocol96370
 import mpyq
 
 from .model import (
+    ChatMessage,
     DraftAction,
     DraftActionType,
     Player,
@@ -13,7 +14,9 @@ from .model import (
 from .util import *
 
 
-def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]) -> Replay:
+def parse_replay(
+    filepath, gamemode_filter=None, known_replay_ids=[], read_chat=False
+) -> Replay | None:
     archive = mpyq.MPQArchive(filepath)
     contents = archive.header["user_data_header"]["content"]
     header = protocol96370.decode_replay_header(contents)
@@ -60,7 +63,6 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]) -> Replay:
     # Initdata
     initdata = protocol.decode_replay_initdata(archive.read_file("replay.initData"))
     gamemode = None
-    old_replay = False
     try:
         gamemode = get_gamemode(
             initdata["m_syncLobbyState"]["m_gameDescription"]["m_gameOptions"][
@@ -88,6 +90,11 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]) -> Replay:
 
     if replay_id in known_replay_ids:
         return None
+
+    lobby_id_to_player = {}
+    initdata_slots = initdata["m_syncLobbyState"]["m_lobbyState"]["m_slots"]
+    for slot in initdata_slots:
+        lobby_id_to_player[slot["m_userId"]] = slot["m_toonHandle"].decode()
 
     # Trackerevents
     duration = None
@@ -197,13 +204,29 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]) -> Replay:
     player_models = ([], [])
     hero_models = ([], [])
     winner = None
+    player_to_model: dict[str, Player] = {}
     for player_id, player in players.items():
         i = 0 if player["team"] == Team.LEFT else 1
         player_model = Player(player_id, player["name"], player["battletag"])
+        player_to_model[player_id] = player_model
         player_models[i].append(player_model)
         hero_models[i].append(player["hero"])
         if "win" in player.keys() and player["win"]:
             winner = player["team"]
+
+    chat = []
+    if read_chat:
+        contents = archive.read_file("replay.game.events")
+        for event in protocol.decode_replay_game_events(contents):
+            if (
+                event["_eventid"] == 32
+                and event["_event"] == "NNet.Game.STriggerChatMessageEvent"
+            ):
+                send_time = get_seconds(event["_gameloop"])
+                player = lobby_id_to_player[event["_userid"]["m_userId"]]
+                sender = player_to_model[player]
+                content: str = event["m_chatMessage"].decode()
+                chat.append(ChatMessage(send_time, sender, content))
 
     return Replay(
         replay_id,
@@ -218,6 +241,7 @@ def parse_replay(filepath, gamemode_filter=None, known_replay_ids=[]) -> Replay:
         winner,
         draft if len(draft) == 16 else None,
         firstpick,
+        chat,
     )
 
 
