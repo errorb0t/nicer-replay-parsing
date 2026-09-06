@@ -8,3 +8,9 @@ version = "0.8"
 dependencies = ["heroprotocol @ git+https://github.com/Blizzard/heroprotocol"]
 authors = [{ name = "errorb0t" }]
 description = "heroprotocol wrapper that extracts basic info from a replay"
+
+[project.scripts]
+replaydump = "nicer_replay_parsing.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["nicer_replay_parsing*"]
