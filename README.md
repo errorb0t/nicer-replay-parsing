@@ -1,3 +1,5 @@
+This repository provides a more user-friendly wrapper around Blizzard's `heroprotocol` library for the most common use cases such as reading out Battlegrounds, Drafts, Battletags etc.
+
 To install this module:
 
 `pip install git+https://github.com/errorb0t/nicer-replay-parsing.git`
